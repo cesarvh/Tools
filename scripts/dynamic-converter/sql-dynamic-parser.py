@@ -40,7 +40,10 @@ def parse(inp, mark, museum, connect_string, dry_run):
             continue
 
         for each in option_tags:
-            vocab_id = each['id']
+            if 'from-static-id' in each.attrs:
+		vocab_id = each['from-static-id']
+            else:
+                vocab_id = each['id']
             field_name = each.contents[0]
 
             # print(vocab_id, field_name)
