@@ -6,6 +6,8 @@ from bs4 import BeautifulSoup
 valid_tokens = ["-m", "-i", "-o", "-d"]
 museums = ["pahma", "bampfa", "ucjeps", "botgarden", "cinefiles"]
 
+URN = 'urn:%'
+
 UTF8Writer = codecs.getwriter('utf8')
 sys.stdout = UTF8Writer(sys.stdout)
 
@@ -42,7 +44,7 @@ def parse(inp, mark, museum, connect_string, dry_run):
 
         # Write the SQL count statements into file
         count_statement = "SELECT %s, COUNT(*) FROM %s GROUP BY %s" % (db_column, db_table, db_column)
-        urn_count_statement = "SELECT COUNT(DISTINCT %s) FROM %s WHERE %s not like '%s'" % (db_column, db_table, db_column, 'urn:%') 
+        urn_count_statement = "SELECT COUNT(DISTINCT %s) FROM %s WHERE %s not like '%s'" % (db_column, db_table, db_column, URN)
         counts.write(count_statement)
         verify_all_urns_count.append(urn_count_statement)
         count_sqlstatements.append(count_statement)
@@ -58,12 +60,12 @@ def parse(inp, mark, museum, connect_string, dry_run):
                 search_id = field_name
 
             new_value = "urn:cspace:%s.cspace.berkeley.edu:vocabularies:name(%s):item:name(%s)''%s''" % (museum, vocab_list, vocab_id, field_name)
-            # update_statement is only used to write the future queries into a file, it will NOT be used as the acqual query. The parameters will be used to parameterize the queries. 
 
+            # update_statement is only used to write the future queries into a file, it will NOT be used as the acqual query. The parameters will be used to parameterize the queries. 
             update_statement_params.append((db_table, db_column, new_value, db_column, search_id))
             update_statement = "update %s set %s='%s' where %s='%s';\n" % (db_table, db_column, new_value, db_column, search_id)
             outfile.write(update_statement)
-            # update_sqlstatements.append(update_statement)
+
 
     outfile.close()
     markup.close()
@@ -72,9 +74,6 @@ def parse(inp, mark, museum, connect_string, dry_run):
     execute(verify_all_urns_count, update_statement_params, count_sqlstatements, connect_string, museum, dry_run)
 
 def sanity_check(identifier):
-    # if not isinstance(identifier, unicode"):
-        # print ("Warning: " + identifier + " is not unicode. This item will be skipped.")
-        # return False
     if (len(identifier.split()) != 1): 
         print ("Warning: table names are not allowed to have spaces. This item will be skipped.")
         return False
@@ -119,31 +118,27 @@ def execute(urn_sqlcountstatements, update_statement_params, count_sqlstatements
     total_to_change = do_counts(counts_file, dbcursor, count_sqlstatements)
     
     # Second: Perform the changes
-    for update_statement in update_sqlstatements:
+    for i in range(0, len(update_statement_params)):
+        params = update_statement_params[i]
+
+        # interpolate the column and table names, which have already been checked
+        query = "UPDATE {0} SET {1}=(%s) WHERE {1}=(%s);".format(params[0], params[1]) 
+
         if not dry_run:
-            dbcursor.execute(update_statement)
+            # pass in parameters to parameterize the query
+            dbcursor.execute(query, (params[2], params[4])) 
         else:
-            print(update_statement)
+            # build string for dry run
+            print(query % (parms[2], params[4]))
     
     # Third: Do the counts after all the changes
     counts_file.write("Counts after: ")
     total_changed = do_counts(counts_file, dbcursor, count_sqlstatements)
     
-    if dry_run:
-        print ("Halting now.")
-        return 1
 
     if total_changed == total_to_change:
-        for i in range(0, len(update_statement_params)):
-            params = update_statement_params[i]
-            
-            query = "UPDATE {0} SET {1}=(%s) WHERE {1}=(%s)".format(params[0], params[1]) 
-            #            TNAME[0]   COL[1]=NEWVAL[2]      COL[3 or 1]=colname[4]
-            print (query)
-            # Form statement and interpolate strings
-            # to do: Find a way to both, parameterize and interpolate a string into a query
-            # dbconn.execute(____)# update_statement = "update TABLE_NAME set %s='%s' where COLUMN='%s';\n" % 
-            dbcursor.execute(query, (params[2], parms[4]))    
+        for statement in urn_sqlcountstatements:
+            dbcursor.execute(statement)
             results = dbcursor.fetchall()
             if (results[0][0] != 0):
                 print ("Something went wrong... aborting, undoing database changes because some record did not change: %s" % (statement))
@@ -155,26 +150,6 @@ def execute(urn_sqlcountstatements, update_statement_params, count_sqlstatements
     print ("Looks like there are either more or less records than what we started with. Undoing changes. Check counts log for numbers.")
     dbconn.rollback()
     return -1
-
-    # if theyre the same...:
-            # update_statement = "UPDATE {0} set "
-            # dbcursor.execute('UPDATE {0} set (%s)=(%s) WHERE {1}=(%s)')
-            # update_statement = "update TABLE_NAME set %s='%s' where COLUMN='%s';\n" % 
-            # (db_table, db_column, new_value, db_column, search_id)
-        # for statement in urn_sqlcountstatements:
-    #         dbcursor.execute(statement) 
-    #         results = dbcursor.fetchall()
-    #         if (results[0][0] != 0):
-    #             print ("Something went wrong... aborting, undoing database changes because some record did not change: %s" % (statement))
-    #             dbconn.rollback()
-    #             return -1
-    #     dbconn.commit() 
-    #     return 1
-
-    # print ("Looks like there are either more or less records than what we started with. Undoing changes. Check counts log for numbers.")
-    # dbconn.rollback()
-    # return -1
-    
 
 if __name__ == "__main__":
     args = sys.argv
