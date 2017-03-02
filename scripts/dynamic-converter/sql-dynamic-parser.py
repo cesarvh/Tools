@@ -59,7 +59,7 @@ def parse(inp, mark, museum, connect_string, dry_run):
             else:
                 search_id = field_name
 
-            new_value = "urn:cspace:%s.cspace.berkeley.edu:vocabularies:name(%s):item:name(%s)''%s''" % (museum, vocab_list, vocab_id, field_name)
+            new_value = "urn:cspace:%s.cspace.berkeley.edu:vocabularies:name(%s):item:name(%s)'%s'" % (museum, vocab_list, vocab_id, field_name)
 
             # update_statement is only used to write the future queries into a file, it will NOT be used as the acqual query. The parameters will be used to parameterize the queries. 
             update_statement_params.append((db_table, db_column, new_value, db_column, search_id))
