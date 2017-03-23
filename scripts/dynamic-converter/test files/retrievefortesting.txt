@@ -1,0 +1,58 @@
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_bottom)'bottom'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_top)'top'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_back)'back'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_inside)'inside'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_top)'top'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_bottom)'bottom'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_bottom)'bottom'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_inside)'inside'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_inside)'inside'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_inside)'inside'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_inside)'inside'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_left)'left'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_left)'left'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_left)'left'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_recto)'recto'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_right)'right'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_right)'right'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_right)'right'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_top)'top'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_top)'top'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_verso)'verso'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_back)'back'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_back)'back'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_back)'back'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_back)'back'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_back)'back'
+cspace.berkeley.edu:vocabularies:name(contentposition):item:name(cp_back)'back'
+
+UPDATE collectionobjects_common_contentpositions set item='bottom' WHERE id='02a96e71-9549-4556-8753-33881b82eb84';
+UPDATE collectionobjects_common_contentpositions set item='top' WHERE id='ed2ffc87-078e-4522-bc56-3305d9540707';
+UPDATE collectionobjects_common_contentpositions set item='back' WHERE id='c4096bf0-a7aa-4466-bed4-5175e656c8e4';
+UPDATE collectionobjects_common_contentpositions set item='inside' WHERE id='e774a014-f818-4461-981d-e522f5987dd1';
+UPDATE collectionobjects_common_contentpositions set item='top' WHERE id='531ce675-2169-4caf-9359-b00e3c5b29ce';
+UPDATE collectionobjects_common_contentpositions set item='bottom' WHERE id='bdf43cda-cab3-4114-929a-676c0873d92a';
+UPDATE collectionobjects_common_contentpositions set item='bottom' WHERE id='cb86ef56-70e4-43aa-9550-6ddd5b439d1b';
+UPDATE collectionobjects_common_contentpositions set item='inside' WHERE id='8180a214-b09c-4c01-a752-7c9d936b95a1';
+UPDATE collectionobjects_common_contentpositions set item='inside' WHERE id='3c830eb4-fc50-4635-9ae2-eeea294c2197';
+UPDATE collectionobjects_common_contentpositions set item='inside' WHERE id='6e153f1b-10cc-4e0e-a807-008a7fd024c1';
+UPDATE collectionobjects_common_contentpositions set item='inside' WHERE id='2fd6d205-c87d-45f5-b21c-47e9209b40fc';
+UPDATE collectionobjects_common_contentpositions set item='left' WHERE id='cbb74f02-b3dc-44ba-bb03-238f738ebbb0';
+UPDATE collectionobjects_common_contentpositions set item='left' WHERE id='9575fa39-3945-4b0f-81ff-5bb00405d0c9';
+UPDATE collectionobjects_common_contentpositions set item='left' WHERE id='e9e45a24-b007-4c03-8982-1625b54372ba';
+UPDATE collectionobjects_common_contentpositions set item='recto' WHERE id='7b9b04d2-5be7-4401-abe6-0610885bf7e5';
+UPDATE collectionobjects_common_contentpositions set item='right' WHERE id='7244adfb-f8ce-4abc-9c56-ed19f2a22024';
+UPDATE collectionobjects_common_contentpositions set item='right' WHERE id='fb330a48-0b13-4ed8-bff3-346c6ea020f8';
+UPDATE collectionobjects_common_contentpositions set item='right' WHERE id='e30c9b6f-ba08-4d75-a570-a5c19cbe22b3';
+UPDATE collectionobjects_common_contentpositions set item='top' WHERE id='0221c36e-fe3e-4839-b3a7-cd9090c5ad01';
+UPDATE collectionobjects_common_contentpositions set item='top' WHERE id='2b43f728-ee7a-4a73-8b08-57f0d5681bb7';
+UPDATE collectionobjects_common_contentpositions set item='verso' WHERE id='c7fa2c01-1ebc-4230-8345-d8a20fbdf18f';
+UPDATE collectionobjects_common_contentpositions set item='back' WHERE id='494bb5e2-0d08-4330-bbf1-2ff13419dfb6';
+UPDATE collectionobjects_common_contentpositions set item='back' WHERE id='eb5fad12-f366-420b-b50c-6971fafe0de2';
+UPDATE collectionobjects_common_contentpositions set item='back' WHERE id='631efedc-761d-4f05-99e3-119835c1f5ee';
+UPDATE collectionobjects_common_contentpositions set item='back' WHERE id='e4bb92ff-0d61-4c8b-a560-587d08468902';
+UPDATE collectionobjects_common_contentpositions set item='back' WHERE id='8c3fa590-4375-4007-bd5a-d2003e7418c3';
+UPDATE collectionobjects_common_contentpositions set item='back' WHERE id='0f77f146-6438-4052-8ec8-e0ec22198050';
+
+
+select id, item FROM collectionobjects_common_contentpositions;
