@@ -16,8 +16,8 @@ sys.setdefaultencoding('utf-8')
 timeoutcommand = "set statement_timeout to 240000; SET NAMES 'utf8';"
 
 
-def getCSID(argType, arg, config):
-    dbconn = psycopg2.connect(config.get('connect', 'connect_string'))
+def getCSID(argType, arg, connect_string):
+    dbconn = psycopg2.connect(connect_string)
     objects = dbconn.cursor()
     objects.execute(timeoutcommand)
 
@@ -27,7 +27,7 @@ JOIN hierarchy h on h.id=cc.id
 JOIN misc on (cc.id = misc.id and misc.lifecyclestate <> 'deleted')
 WHERE objectnumber = '%s'""" % arg
     elif argType == 'placeName':
-        query = """SELECT h.name from places_common pc
+        query =  """SELECT h.name from places_common pc
 JOIN hierarchy h on h.id=pc.id
 JOIN misc on (pc.id = misc.id and misc.lifecyclestate <> 'deleted')
 WHERE pc.refname ILIKE '%""" + arg + "%%'"
